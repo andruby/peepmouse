@@ -15,7 +15,7 @@ get '/' do
         settings.sockets << ws
       end
       ws.onmessage do |msg|
-        EM.next_tick { settings.sockets.each{|s| s.send(msg) } }
+        EM.next_tick { settings.sockets.each{|s| s.send(msg) unless s == ws } }
       end
       ws.onclose do
         warn("wetbsocket closed")
